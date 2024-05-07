@@ -6,13 +6,9 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:54:23 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/06 16:10:03 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:36:23 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// ./philo 						10            50 			 10				 10				4
-	
-					//number_philo      time_to_die	 time_to_eat	time_to_sleep  OPCIONAL number_REFEICOES
 
 #include "philo.h"
 
@@ -61,30 +57,6 @@ int	ft_atol(char *str)
 	return (result * signal);
 }
 
-int	init_vars(t_philo_vars *vars, char **av)
-{
-	if (check_args(av) == 1)
-		return (1);
-	vars->number_philo = ft_atol(av[1]);
-	vars->time_to_die = ft_atol(av[2]);
-	vars->time_to_eat = ft_atol(av[3]);
-	vars->time_to_sleep = ft_atol(av[4]);
-	if (av[5])
-	{
-		vars->number_meals = ft_atol(av[5]);
-		if (vars->number_meals <= 0)
-			return (1);
-	}
-	else
-		vars->number_meals = -1;
-	if (vars->number_philo <= 0 ||
-		vars->time_to_die <= 0 ||
-		vars->time_to_eat <= 0 ||
-		vars->time_to_sleep <= 0)
-		return (1);
-	return (0);
-}
-
 unsigned long get_time(void)
 {
 	struct timeval	time;
@@ -99,25 +71,10 @@ unsigned long get_time(void)
 	return (total);
 }
 
-int count = 0;
-pthread_mutex_t lock;
-
-void	*routine(void *av)
+unsigned long real_time(t_philo_vars *philo)
 {
-	int i;
-	(void) *av;
-	
-	i = -1;
-	while (++i < 1000)
-	{
-		pthread_mutex_lock(&lock);
-		count++;
-		pthread_mutex_unlock(&lock);
-	}
-	return (NULL);
+	return (get_time() - philo->time_now);
 }
-
-
 
 int main(int ac, char **av) 
 {
@@ -128,29 +85,24 @@ int main(int ac, char **av)
         printf("Wrong number of augments\n");
         return 1;
     }
-    t_philo_vars vars;
-    if (init_vars(&vars, av) == 1) 
+    t_philo_vars philo;
+    if (init_vars(&philo, av) == 1) 
 	{
         printf("Invalid arguments.\n");
         return 1;
     }
-    printf("Number of philosophers: %d\n", vars.number_philo);
-    printf("Time to die: %d\n", vars.time_to_die);
-    printf("Time to eat: %d\n", vars.time_to_eat);
-    printf("Time to sleep: %d\n", vars.time_to_sleep);
+    printf("Number of philosophers: %d\n", philo.number_philo);
+    printf("Time to die: %d\n", philo.time_to_die);
+    printf("Time to eat: %d\n", philo.time_to_eat);
+    printf("Time to sleep: %d\n", philo.time_to_sleep);
     if (ac == 6) {
-        printf("Number of times each philosopher must eat: %d\n", vars.number_meals);
+        printf("Number of times each philosopher must eat: %d\n", philo.number_of_meals);
     }
 	int time = get_time();
-	printf ("Total : %d milliseconds\n", time);
-	
-	pthread_mutex_init(&lock, NULL);
-  	pthread_create(&tid1, NULL, &routine, NULL);
-  	pthread_create(&tid2, NULL, &routine, NULL);
-	
-  	pthread_join(tid1, NULL);
-  	pthread_join(tid2, NULL);
-  	pthread_mutex_destroy(&lock);
-  	printf("cont: %d\n", count);
+	printf ("time : %d milliseconds\n", time);
+	t_philo_vars *p = &philo;
+	int time_now = real_time(p);
+	printf ("Real time : %d milliseconds\n", time_now);
+	free(p);
     return (0);
 }
