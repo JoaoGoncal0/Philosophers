@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:17:53 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/07 16:31:59 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:34:10 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,42 +53,3 @@
 //	No final destruir todas as mutexes e dar os frees necessarios 
 //
 
-#include "philo.h"
-
-int main(int ac, char **av) 
-{
-    if (ac < 5 || ac > 6) 
-	{
-        printf("Wrong number of arguments\n");
-        return 1;
-    }
-
-    t_philo_vars philo;
-    if (init_vars(&philo, av) == 1) 
-	{
-        printf("Invalid arguments.\n");
-        return 1;
-    }
-    printf("Number of philosophers: %d\n", philo.number_philo);
-    printf("Time to die: %d\n", philo.time_to_die);
-    printf("Time to eat: %d\n", philo.time_to_eat);
-    printf("Time to sleep: %d\n", philo.time_to_sleep);
-    if (ac == 6) 
-        printf("Number of times each philosopher must eat: %d\n", philo.number_of_meals);
-		
-    t_philo *philos = malloc(sizeof(t_philo) * philo.number_philo);
-    if (!philos) 
-	{
-        printf("Failed to allocate memory for philosophers.\n");
-        return 1;
-    }
-    pthread_mutex_t print_mutex;
-    pthread_mutex_init(&print_mutex, 0);
-    assign_param(philos, &philo, philo.number_philo, &print_mutex);
-    for (int i = 0; i < philo.number_philo; ++i) {
-        printf("Philosopher %d: ate=%d, id=%d, vars=%p, mutex=%p, print_mutex=%p\n",
-               i+1, philos[i].ate, philos[i].id, philos[i].vars, philos[i].mutex, philos[i].print);
-    }
-    free(philos);
-    return 0;
-}

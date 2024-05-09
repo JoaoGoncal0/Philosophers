@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -12,27 +13,29 @@
 
 #include "philo.h"
 
-int	init_vars(t_philo_vars *philo, char **av)
+int	init_vars(t_philo_vars *vars, char **av)
 {
 	if (check_args(av) == 1)
 		return (1);
-	philo->number_philo = ft_atol(av[1]);
-	philo->time_now = get_time();
-	philo->time_to_die = ft_atol(av[2]);
-	philo->time_to_eat = ft_atol(av[3]);
-	philo->time_to_sleep = ft_atol(av[4]);
+	vars->time_now = get_time();
+	vars->total_meals = 0;
+	vars->number_philo = ft_atol(av[1]);
+	vars->time_now = get_time();
+	vars->time_to_die = ft_atol(av[2]);
+	vars->time_to_eat = ft_atol(av[3]);
+	vars->time_to_sleep = ft_atol(av[4]);
 	if (av[5])
 	{
-		philo->number_of_meals = ft_atol(av[5]);
-		if (philo->number_of_meals <= 0)
+		vars->number_of_meals = ft_atol(av[5]);
+		if (vars->number_of_meals <= 0)
 			return (1);
 	}
 	else
-		philo->number_of_meals = -1;
-	if (philo->number_philo <= 0 ||
-		philo->time_to_die <= 0 ||
-		philo->time_to_eat <= 0 ||
-		philo->time_to_sleep <= 0)
+		vars->number_of_meals = -1;
+	if (vars->number_philo <= 0 ||
+		vars->time_to_die <= 0 ||
+		vars->time_to_eat <= 0 ||
+		vars->time_to_sleep <= 0)
 		return (1);
 	return (0);
 }
@@ -60,30 +63,17 @@ int	init_program(t_philo *philo, t_philo_vars *vars)
 
 	i = 0;
 	if (!philo)
-		free_params(philo);
+		free_params(philo, NULL, vars);
 	philo->mutex = malloc(sizeof(pthread_mutex_t) * vars->number_philo);
 	if (!philo->mutex)
-		free_params(philo);
+		free_params(philo, philo->mutex, vars);
 	while (i < vars->number_philo)
 	{
-		if (pthread_mutex_init(&philo->mutex[i++], NULL) != 0);
-			return (free_params(philo));
-		if (pthread_mutex_init(&philo->print, NULL) != 0);
-			return (free_params(philo));
+		if (pthread_mutex_init(&philo->mutex[i++], NULL) != 0)
+			free_params(philo, philo->mutex, vars);
+		if (pthread_mutex_init(philo->print, NULL) != 0)
+			free_params(philo, philo->mutex, vars);
 	}
 	assing_param(philo, vars, philo->mutex, philo->print);
-	return (0);
-}
-
-int	free_params(t_philo *philo)
-{
-	if (philo)
-	{
-		if (philo->vars)
-			free(philo->vars);
-		if (philo->mutex)
-			free(philo->mutex);
-		free(philo);
-	}	
 	return (0);
 }

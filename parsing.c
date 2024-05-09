@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:54:23 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/07 16:36:23 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:45:47 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_atol(char *str)
 	i = 0;
 	result = 0;
 	signal = 1;
-	while (str[i] >= 9 && str[i] <= 13 || str[i] == 32)
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -71,38 +71,8 @@ unsigned long get_time(void)
 	return (total);
 }
 
-unsigned long real_time(t_philo_vars *philo)
+unsigned long real_time(t_philo *philo)
 {
-	return (get_time() - philo->time_now);
+	return (get_time() - philo->vars->time_now);
 }
 
-int main(int ac, char **av) 
-{
-	pthread_t tid1, tid2;
-
-    if (ac < 5 || ac > 6) 
-	{
-        printf("Wrong number of augments\n");
-        return 1;
-    }
-    t_philo_vars philo;
-    if (init_vars(&philo, av) == 1) 
-	{
-        printf("Invalid arguments.\n");
-        return 1;
-    }
-    printf("Number of philosophers: %d\n", philo.number_philo);
-    printf("Time to die: %d\n", philo.time_to_die);
-    printf("Time to eat: %d\n", philo.time_to_eat);
-    printf("Time to sleep: %d\n", philo.time_to_sleep);
-    if (ac == 6) {
-        printf("Number of times each philosopher must eat: %d\n", philo.number_of_meals);
-    }
-	int time = get_time();
-	printf ("time : %d milliseconds\n", time);
-	t_philo_vars *p = &philo;
-	int time_now = real_time(p);
-	printf ("Real time : %d milliseconds\n", time_now);
-	free(p);
-    return (0);
-}
