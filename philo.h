@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 11:54:27 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/08 17:11:47 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/11 19:26:06 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ unsigned long 				real_time(t_philo *philo);
 // init_program.c
 
 int							init_vars(t_philo_vars *philo, char **av);
-void						assing_param(t_philo *philo, t_philo_vars *vars, pthread_mutex_t *mutex, 
+void						assign_param(t_philo *philo, t_philo_vars *vars, pthread_mutex_t *mutex, 
 										pthread_mutex_t *print);
 int							init_program(t_philo *philo, t_philo_vars *vars);
 
@@ -66,7 +66,7 @@ void   						 destroy_mutex(t_philo *philo);
 
 void   						print(t_philo *philo, unsigned long time, char *action);
 void    					*routine(void *p);
-void   						check_rountine(t_philo *philo, t_philo_vars *vars);
+void   						check_routine(t_philo *philo, t_philo_vars *vars);
 int							main(int ac, char **av);
 
 #endif

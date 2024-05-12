@@ -20,7 +20,6 @@ int	init_vars(t_philo_vars *vars, char **av)
 	vars->time_now = get_time();
 	vars->total_meals = 0;
 	vars->number_philo = ft_atol(av[1]);
-	vars->time_now = get_time();
 	vars->time_to_die = ft_atol(av[2]);
 	vars->time_to_eat = ft_atol(av[3]);
 	vars->time_to_sleep = ft_atol(av[4]);
@@ -62,18 +61,20 @@ int	init_program(t_philo *philo, t_philo_vars *vars)
 	int i;
 
 	i = 0;
-	if (!philo)
-		free_params(philo, NULL, vars);
 	philo->mutex = malloc(sizeof(pthread_mutex_t) * vars->number_philo);
-	if (!philo->mutex)
+	philo->print = malloc(sizeof(pthread_mutex_t));
+    if (!philo->print || !philo->mutex)
 		free_params(philo, philo->mutex, vars);
+	if (pthread_mutex_init(philo->print, NULL) != 0)
+		free_params(philo, philo->mutex, vars);	
 	while (i < vars->number_philo)
 	{
-		if (pthread_mutex_init(&philo->mutex[i++], NULL) != 0)
+		if (pthread_mutex_init(&philo->mutex[i], NULL) != 0)
 			free_params(philo, philo->mutex, vars);
-		if (pthread_mutex_init(philo->print, NULL) != 0)
-			free_params(philo, philo->mutex, vars);
+		i++;
 	}
+	if (pthread_mutex_init(philo->print, 0) != 0)
+		free_params(philo, philo->mutex, vars);
 	assing_param(philo, vars, philo->mutex, philo->print);
 	return (0);
 }

@@ -1,4 +1,4 @@
-NAME = philo.a
+NAME = philo
 
 CC = cc -Wall -Werror -Wextra
 

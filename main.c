@@ -36,7 +36,7 @@ void    *routine(void *p)
     return (0);
 }
 
-void    check_rountine(t_philo *philo, t_philo_vars *vars)
+void    check_routine(t_philo *philo, t_philo_vars *vars)
 {
     int i;
 
@@ -71,26 +71,22 @@ int main(int ac, char **av)
     t_philo_vars        *vars;
     pthread_t           *thread;
 
-    printf("Entrou\n");
     if (ac < 5 || ac > 6)
         return (exit_error());
     vars = (t_philo_vars *)malloc(sizeof(t_philo_vars));
     if (init_vars(vars, av) == 1)
         return (free_params(0, 0, vars));
     philo = (t_philo *)malloc(sizeof(t_philo) * vars->number_philo); 
-    
     if (init_program(philo, vars) == 1)
         return (1);
     thread = (pthread_t *)malloc(sizeof(pthread_t) * vars->number_philo);
     i = -1;
-   
-    while (++i < philo->vars->number_philo)
+    while (++i < vars->number_philo)
     {
-       
-        pthread_create(&thread[i], NULL, routine, philo + 1);
+        pthread_create(&thread[i], NULL, routine, philo + i);
         usleep(100);
     }
-    check_rountine(philo, vars);
+    check_routine(philo, vars);
     free(thread);
     return (0);
 }
