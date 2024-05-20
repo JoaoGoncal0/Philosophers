@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 11:54:27 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/11 19:26:06 by jomendes         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -20,53 +8,51 @@
 # include <stdlib.h>
 # include <pthread.h>
 
-typedef struct 		s_philo_vars
+typedef struct  s_check
 {
-	int						number_philo;
-	int						time_to_die;
-	int						time_to_eat;
-	int						time_to_sleep;
-	int						number_of_meals;
-	int						total_meals;
-	unsigned long			time_now;
-}					t_philo_vars;
+    int available;
+    pthread_mutex_t mutex;
+}               t_check;
 
-typedef struct 		s_philo
+typedef struct  s_philo
 {
-	int						ate;
-	int						id;
-	t_philo_vars			*vars;
-	pthread_mutex_t			*mutex;
-	pthread_mutex_t			*print;
-	unsigned long			last_meal;
-}					t_philo;
+    int id;
+    pthread_t   thread;
+    int meals_count;
+    int time_to_die;
+    pthread_mutex_t state;
+    t_check *r_fork;
+    t_check *l_fork;
+    t_info  *info;
+}              t_philo;
 
-// parsing.c
+typedef struct s_info
+{
+    int n_philos;
+    int time_to_died;
+    int time_to_eat;
+    int time_to_sleep;
+    int n_meals;
+    unsigned long time_now;
+    int dead;
+    int meals_eaten;
+    t_check *forks;
+    t_philo *philos;
+    pthread_mutex_t lock;
+    pthread_mutex_t message;
+}             t_info;
+// utils.c
 
-int							check_args(char **av);
-int							ft_atol(char *str);
-unsigned long 				get_time(void);
-unsigned long 				real_time(t_philo *philo);
+int             check_args(char **av);
+int             ft_atol(char *str);
+unsigned long   get_time(void);
+unsigned long   real_time(t_info *info);
 
-// init_program.c
+// init.c
 
-int							init_vars(t_philo_vars *philo, char **av);
-void						assign_param(t_philo *philo, t_philo_vars *vars, pthread_mutex_t *mutex, 
-										pthread_mutex_t *print);
-int							init_program(t_philo *philo, t_philo_vars *vars);
-
-// free_functions.c
-
-int 						exit_error(void);
-int 						free_params(t_philo *philo, pthread_mutex_t *mutex, 
-										t_philo_vars *vars);
-void   						 destroy_mutex(t_philo *philo);
-
-// main.c 
-
-void   						print(t_philo *philo, unsigned long time, char *action);
-void    					*routine(void *p);
-void   						check_routine(t_philo *philo, t_philo_vars *vars);
-int							main(int ac, char **av);
+void            init_forks(t_info *info);
+int             init_program(char **av, t_info *info);
+void            run_program(t_info *info);
+void            finish_program(t_info *info);
 
 #endif
