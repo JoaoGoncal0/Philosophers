@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/20 11:29:37 by jomendes          #+#    #+#             */
+/*   Updated: 2024/05/21 17:48:29 by jomendes         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	check_args(char **av)
@@ -11,12 +23,20 @@ int	check_args(char **av)
 		j = 0;
 		while (av[i][j])
 		{
-			if (av[i][j] < '0' || av[i][j] > '9')
+			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
 				return (1);
 			j++;
 		}
 		i++;
 	}
+	return (0);
+}
+
+int	check_for_values(t_info *info)
+{
+	if (info->n_philos <= 0 || info->time_to_die <= 0 || \
+	info->time_to_eat <= 0|| info->time_to_sleep <= 0)
+		return (1);
 	return (0);
 }
 
@@ -42,26 +62,20 @@ int	ft_atol(char *str)
 		result = result * 10 + str[i] - '0';
 		i++;
 	}
-	if ((result * signal) > INT_MAX || result * signal <= 0)
-		return (1);
 	return (result * signal);
 }
 
-unsigned long get_time(void)
+unsigned long	get_time(unsigned long start_time)
 {
 	struct timeval	time;
-	unsigned long	sec;
-	unsigned long	micro_sec;
-	unsigned long	total;
+	unsigned long	l;
+	unsigned long	s;
+	unsigned long	u;
 
 	gettimeofday(&time, NULL);
-	sec = (time.tv_sec * 1000);
-	micro_sec = (time.tv_usec / 1000);
-	total = (sec + micro_sec);
-	return (total);
+	s = (time.tv_sec * 1000);
+	u = (time.tv_usec / 1000);
+	l = s + u;
+	return (l - start_time);
 }
 
-unsigned long real_time(t_info *info)
-{
-	return (get_time() - info->time_now);
-}

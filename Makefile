@@ -4,10 +4,11 @@ CC = cc -Wall -Werror -Wextra
 
 RM = rm -f
 
-SRCS =	free_functions.c \
-		init_program.c \
-		main.c \
-		parsing.c \
+SRCS =	 actions.c \
+		forks.c \
+		init.c \
+		philo.c \
+		utils.c \
 
 OBJ = $(SRCS:.c=.o)
 
