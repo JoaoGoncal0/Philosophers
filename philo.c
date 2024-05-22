@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:46:50 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/21 17:26:58 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:38:10 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	special_case(t_philo *philo)
 	|| philo->info->n_philos == 1)
 	{
 		pthread_mutex_lock(&philo->info->message);
-		printf("%lu %d is thinking\n", get_time(philo->info->start_time) - philo->info->time_now, philo->id);
+		printf("%lu %d is thinking\n", get_time(philo->info->start_time), philo->id);
 		pthread_mutex_unlock(&philo->info->message);
 		usleep(philo->info->time_to_die * 1000);
 		pthread_mutex_lock(&philo->info->message);
-		printf("%lu %d is dead\n", get_time(philo->info->start_time) - philo->info->time_now, philo->id);
+		printf("%lu %d is dead\n", get_time(philo->info->start_time), philo->id);
 		pthread_mutex_unlock(&philo->info->message);
 		return (1);
 	}

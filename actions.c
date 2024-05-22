@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:35:32 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/21 15:43:36 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:45:09 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int is_dead(t_philo *philo)
     {
         philo->info->dead = 1;
         pthread_mutex_lock(&philo->info->message);
-        printf("%lu %d died\n", current_time - philo->info->time_now, philo->id);
+        printf("%lu %d died\n", current_time, philo->id);
         pthread_mutex_unlock(&philo->info->message);     
     }
     pthread_mutex_unlock(&philo->info->lock);
@@ -39,7 +39,7 @@ int	start_eating(t_philo *philo)
 	start_time = get_time(philo->info->start_time);
 	eating_time = philo->info->time_to_eat;
 	pthread_mutex_lock(&philo->info->message);
-	printf("%lu %d is eating\n", get_time(philo->info->start_time) - philo->info->time_now, philo->id);
+	printf("%lu %d is eating\n", get_time(philo->info->start_time), philo->id);
 	pthread_mutex_unlock(&philo->info->message);
 	while ((get_time (philo->info->start_time) - start_time) < eating_time)
 	{
@@ -65,7 +65,7 @@ int	start_sleeping(t_philo *philo)
 	start_time = get_time(philo->info->start_time);
 	sleeping_time = philo->info->time_to_sleep;
 	pthread_mutex_lock(&philo->info->message);
-	printf("%lu %d is sleeping\n", get_time(philo->info->start_time) - philo->info->time_now, philo->id);
+	printf("%lu %d is sleeping\n", get_time(philo->info->start_time), philo->id);
 	pthread_mutex_unlock(&philo->info->message);
 	while ((get_time(philo->info->start_time) - start_time) < sleeping_time)
 	{
@@ -82,7 +82,7 @@ void	start_thinking(t_philo *philo)
 {
 	usleep(20);
 	pthread_mutex_lock(&philo->info->message);
-	printf("%lu %d is thinking\n", get_time(philo->info->start_time) - philo->info->time_now, philo->id);
+	printf("%lu %d is thinking\n", get_time(philo->info->start_time), philo->id);
 	pthread_mutex_unlock(&philo->info->message);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:29:26 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/21 17:36:34 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:53:55 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ struct s_info
     int time_to_eat;
     int time_to_sleep;
     int n_meals;
-   	unsigned long time_now;
 	unsigned long start_time;
     int dead;
     int meals_eaten;

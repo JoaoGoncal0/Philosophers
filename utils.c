@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:29:37 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/21 17:48:29 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:23:21 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	check_args(char **av)
 		while (av[i][j])
 		{
 			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
+			{
+				write (2, "Wrong augments\n", 15);
 				return (1);
+			}
 			j++;
 		}
 		i++;

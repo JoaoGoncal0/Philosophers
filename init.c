@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:29:17 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/21 17:48:05 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:48:31 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void    init_forks(t_info *info)
     i = -1;
     while (++i < info->n_philos)
     {   
+		pthread_mutex_init(&info->forks[i].mutex, NULL);
         info->forks[i].available = 1;
         pthread_mutex_init(&info->philos[i].meal_mutex, NULL);
-        pthread_mutex_init(&info->forks[i].mutex, NULL);
         info->philos[i].info = info;
         info->philos[i].id = i + 1;
         info->philos[i].time_to_die = info->time_to_die;
@@ -39,7 +39,6 @@ int init_program(char **av, t_info *info)
 	if (check_args(av) == 1)
 		return (1);
 	info->start_time = get_time(0);
-	info->time_now = 0;
 	info->n_philos = ft_atol(av[1]);
 	info->time_to_die = ft_atol(av[2]);
 	info->time_to_eat = ft_atol(av[3]);
@@ -54,7 +53,6 @@ int init_program(char **av, t_info *info)
 		info->n_meals = -1;
 	if (check_for_values(info) == 1)
 		return (1);
-	printf("meu deus\n");
 	info->dead = 0;
 	info->meals_eaten = 0;
 	info->forks = malloc(sizeof(t_fork) * info->n_philos);

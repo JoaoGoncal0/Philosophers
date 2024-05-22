@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:48:41 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/21 15:44:02 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:38:50 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void grab_forks(t_philo *philo)
     if (!is_dead(philo))
     {
         pthread_mutex_lock(&philo->info->message);
-        printf("%lu %d has taken his right fork\n",
-               get_time(philo->info->start_time) - philo->info->time_now, philo->id);
+        printf("%lu %d has taken a fork\n",
+               get_time(philo->info->start_time), philo->id);
         pthread_mutex_unlock(&philo->info->message);
     }
     pthread_mutex_unlock(&philo->r_fork->mutex); 
@@ -70,8 +70,8 @@ void grab_forks(t_philo *philo)
     if (!is_dead(philo))
     {
         pthread_mutex_lock(&philo->info->message);
-        printf("%lu %d has taken his left fork\n",
-               get_time(philo->info->start_time) - philo->info->time_now, philo->id);
+        printf("%lu %d has taken a fork\n",
+               get_time(philo->info->start_time), philo->id);
         pthread_mutex_unlock(&philo->info->message);
     }
     pthread_mutex_unlock(&philo->l_fork->mutex);
