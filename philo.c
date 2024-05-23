@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:46:50 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/22 17:38:10 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:55:26 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,7 @@ void	*routine(void *philo_pointer)
 		if (exec_routine(philo))
 			break;
 		if (philo->meals_counter == philo->info->n_meals)
-		{
-			pthread_mutex_lock(&philo->info->lock);
-			philo->info->meals_eaten++;
-			pthread_mutex_unlock(&philo->info->lock);
 			break ;
-		}
 		if (is_dead(philo))
 			break ;
 		start_thinking(philo);

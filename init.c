@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:29:17 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/22 17:48:31 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:55:33 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int init_program(char **av, t_info *info)
 	if (check_for_values(info) == 1)
 		return (1);
 	info->dead = 0;
-	info->meals_eaten = 0;
 	info->forks = malloc(sizeof(t_fork) * info->n_philos);
 	info->philos = malloc(sizeof(t_philo) * info->n_philos);
 	if (!info->forks || !info->philos)

@@ -1,6 +1,6 @@
 NAME = philo
 
-CC = cc -Wall -Werror -Wextra -fsanitize=address
+CC = cc -Wall -Werror -Wextra -fsanitize=thread -pthread
 
 RM = rm -f
 

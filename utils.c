@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:29:37 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/22 15:23:21 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:15:51 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	ft_atol(char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = result * 10 + str[i] - '0';
+		if (result >= INT_MAX)
+			return (-1);
 		i++;
 	}
 	return (result * signal);

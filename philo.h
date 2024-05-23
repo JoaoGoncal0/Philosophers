@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:29:26 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/22 17:53:55 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:55:37 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ struct s_info
     int n_meals;
 	unsigned long start_time;
     int dead;
-    int meals_eaten;
     t_fork *forks;
     t_philo *philos;
     pthread_mutex_t lock;
