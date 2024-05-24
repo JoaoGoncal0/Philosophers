@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:48:41 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/22 17:38:50 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:34:15 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	try_eat_odd(t_philo *philo)
 	pthread_mutex_lock(&philo->r_fork->mutex);
 	if (!philo->r_fork->available)
 	{
-		pthread_mutex_unlock(&philo->l_fork->mutex);
 		pthread_mutex_unlock(&philo->r_fork->mutex);
+		pthread_mutex_unlock(&philo->l_fork->mutex);
 		return (0);
 	}
 	return (1);
@@ -56,7 +56,7 @@ int	are_forks_available(t_philo *philo)
 		return (try_eat_odd(philo));
 }
 void grab_forks(t_philo *philo)
-{
+{ 
     philo->r_fork->available = 0;
     if (!is_dead(philo))
     {

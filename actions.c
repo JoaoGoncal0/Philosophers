@@ -6,7 +6,7 @@
 /*   By: jomendes <jomendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:35:32 by jomendes          #+#    #+#             */
-/*   Updated: 2024/05/22 17:45:09 by jomendes         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:43:26 by jomendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,23 @@ int is_dead(t_philo *philo)
     pthread_mutex_lock(&philo->info->lock);
     if (current_time > philo->time_to_die)
     {
-        philo->info->dead = 1;
-        pthread_mutex_lock(&philo->info->message);
-        printf("%lu %d died\n", current_time, philo->id);
-        pthread_mutex_unlock(&philo->info->message);     
+		if (philo->info->dead == 0)
+		{
+			philo->info->dead = 1;
+       	 	pthread_mutex_lock(&philo->info->message);
+       	 	printf("%lu %d died\n", current_time, philo->id);
+        	pthread_mutex_unlock(&philo->info->message);  
+		}
+		pthread_mutex_unlock(&philo->info->lock);
+    	return (1); 
     }
-    pthread_mutex_unlock(&philo->info->lock);
-    return (philo->info->dead);
+	if (philo->info->dead == 1)
+	{
+		pthread_mutex_unlock(&philo->info->lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->info->lock);
+	return (0);
 }
 
 int	start_eating(t_philo *philo)
